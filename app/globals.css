@@ -244,6 +244,51 @@ a.cta:hover {
   background: var(--line);
 }
 
+.lede {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.btn-link {
+  background: none;
+  color: var(--ink-soft);
+  font-weight: 500;
+  padding: 4px;
+}
+
+.btn-link:hover {
+  background: none;
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.dial-progress {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.dial-progress span {
+  width: 20px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--surface-alt);
+  display: inline-block;
+}
+
+.dial-progress span.done {
+  background: var(--teal);
+}
+
+.step-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+
 [role="alert"] {
   color: var(--coral);
   background: var(--coral-tint);

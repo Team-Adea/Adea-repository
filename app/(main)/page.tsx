@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { logout } from "@/app/auth/actions";
 
@@ -7,6 +8,16 @@ export default async function DashboardPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  const { data: onboarding } = await supabase
+    .from("profiles")
+    .select("onboarding_completed")
+    .eq("id", user!.id)
+    .single();
+
+  if (!onboarding?.onboarding_completed) {
+    redirect("/onboarding");
+  }
 
   const [{ data: profile }, { data: expenses }, { data: goals }, { data: upcoming }] =
     await Promise.all([
