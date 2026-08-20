@@ -235,6 +235,32 @@ a.cta:hover {
   margin-bottom: 16px;
 }
 
+main.auth-main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 56px;
+  padding-bottom: 56px;
+  background: radial-gradient(circle at 50% 0%, var(--teal-tint), transparent 60%);
+}
+
+main.auth-main .mark {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  font-size: 1.5rem;
+  margin-bottom: 14px;
+}
+
+.tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  margin: 0 0 26px;
+}
+
 .btn-ghost {
   background: var(--surface-alt);
   color: var(--ink);

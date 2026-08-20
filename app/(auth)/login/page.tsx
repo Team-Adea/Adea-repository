@@ -9,8 +9,9 @@ export default async function LoginPage({
   const { error, resetSent } = await searchParams;
 
   return (
-    <main>
+    <main className="auth-main">
       <div className="mark">A</div>
+      <p className="tagline">Transform life&apos;s chaos into clarity.</p>
       <h1>Log in to Adea</h1>
       {error && <p role="alert">{error}</p>}
       {resetSent && <p role="status">Check your email for a password reset link.</p>}

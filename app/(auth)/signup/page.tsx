@@ -9,8 +9,9 @@ export default async function SignupPage({
   const { error } = await searchParams;
 
   return (
-    <main>
+    <main className="auth-main">
       <div className="mark">A</div>
+      <p className="tagline">Transform life&apos;s chaos into clarity.</p>
       <h1>Create your Adea account</h1>
       {error && <p role="alert">{error}</p>}
       <form action={signup}>
