@@ -10,6 +10,7 @@ export default async function SignupPage({
 
   return (
     <main>
+      <div className="mark">A</div>
       <h1>Create your Adea account</h1>
       {error && <p role="alert">{error}</p>}
       <form action={signup}>

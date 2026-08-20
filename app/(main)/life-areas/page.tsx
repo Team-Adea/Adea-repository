@@ -11,15 +11,14 @@ export default async function LifeAreasPage() {
   return (
     <main>
       <h1>Life Areas</h1>
-      <ul>
+      <div className="area-grid">
         {(areas ?? []).map((area) => (
-          <li key={area.slug}>
-            <Link href={`/life-areas/${area.slug}`}>
-              {area.icon} {area.name}
-            </Link>
-          </li>
+          <Link key={area.slug} href={`/life-areas/${area.slug}`} className="area-card">
+            <div className="icon-chip">{area.icon}</div>
+            <span className="area-card-name">{area.name}</span>
+          </Link>
         ))}
-      </ul>
+      </div>
     </main>
   );
 }

@@ -24,23 +24,28 @@ export default async function BrainDumpPage() {
         <button type="submit">Capture</button>
       </form>
 
-      <p>
-        Adea&apos;s AI will soon read this and sort it into the right Life Area automatically.
-        For now, add items directly from each Life Area page.
-      </p>
+      <section aria-label="About sorting" style={{ background: "var(--teal-tint)", borderColor: "transparent" }}>
+        <p style={{ margin: 0, fontSize: "0.85rem" }}>
+          Adea&apos;s AI will soon read this and sort it into the right Life Area automatically.
+          For now, add items directly from each Life Area page.
+        </p>
+      </section>
 
-      <h2>Recent captures</h2>
-      {recent && recent.length > 0 ? (
-        <ul>
-          {recent.map((entry) => (
-            <li key={entry.id}>
-              {entry.raw_text} — <em>{entry.status}</em>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>Nothing captured yet.</p>
-      )}
+      <section aria-label="Recent captures">
+        <h2>Recent captures</h2>
+        {recent && recent.length > 0 ? (
+          <ul>
+            {recent.map((entry) => (
+              <li key={entry.id} className="row">
+                <span>{entry.raw_text}</span>
+                <span className="tag">{entry.status}</span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>Nothing captured yet.</p>
+        )}
+      </section>
     </main>
   );
 }

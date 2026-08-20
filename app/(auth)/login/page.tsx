@@ -10,6 +10,7 @@ export default async function LoginPage({
 
   return (
     <main>
+      <div className="mark">A</div>
       <h1>Log in to Adea</h1>
       {error && <p role="alert">{error}</p>}
       {resetSent && <p role="status">Check your email for a password reset link.</p>}
@@ -24,13 +25,17 @@ export default async function LoginPage({
         </label>
         <button type="submit">Log in</button>
       </form>
-      <form action={requestPasswordReset}>
-        <label>
-          Forgot password? Enter your email
-          <input type="email" name="email" required />
-        </label>
-        <button type="submit">Send reset link</button>
-      </form>
+      <section aria-label="Forgot password">
+        <form action={requestPasswordReset} style={{ marginBottom: 0 }}>
+          <label>
+            Forgot password? Enter your email
+            <input type="email" name="email" required />
+          </label>
+          <button type="submit" className="btn-ghost">
+            Send reset link
+          </button>
+        </form>
+      </section>
       <p>
         No account yet? <Link href="/signup">Sign up</Link>
       </p>

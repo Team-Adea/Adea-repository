@@ -52,8 +52,9 @@ export default async function DashboardPage() {
         {upcoming && upcoming.length > 0 ? (
           <ul>
             {upcoming.map((item) => (
-              <li key={item.id}>
-                {item.title} — due {item.due_date}
+              <li key={item.id} className="row">
+                <span>{item.title}</span>
+                <span className="tag coral">Due {item.due_date}</span>
               </li>
             ))}
           </ul>
@@ -64,8 +65,10 @@ export default async function DashboardPage() {
 
       <section aria-label="Money Snapshot">
         <h2>Money Snapshot</h2>
-        <p>Spent this week: ${weeklySpend.toFixed(2)}</p>
-        <Link href="/life-areas/money">View Money</Link>
+        <p>
+          Spent this week: <span className="figure">${weeklySpend.toFixed(2)}</span>
+        </p>
+        <Link href="/life-areas/money">View Money →</Link>
       </section>
 
       <section aria-label="Active Goals">
@@ -74,40 +77,51 @@ export default async function DashboardPage() {
           <ul>
             {goals.map((goal) => (
               <li key={goal.id}>
-                {goal.title} — {goal.progress}%
+                <div className="row">
+                  <span>{goal.title}</span>
+                  <span className="figure">{goal.progress}%</span>
+                </div>
+                <div className="gauge" style={{ marginTop: 6 }}>
+                  <span style={{ width: `${goal.progress}%` }} />
+                </div>
               </li>
             ))}
           </ul>
         ) : (
           <p>No active goals yet.</p>
         )}
-        <Link href="/life-areas/goals-planning">Go to Goals & Planning</Link>
+        <Link href="/life-areas/goals-planning">Go to Goals &amp; Planning →</Link>
       </section>
 
       <section aria-label="Upcoming">
         <h2>Upcoming</h2>
         {upcoming && upcoming.length > 0 ? (
           <ul>
-            {upcoming.map((item) => (
-              <li key={item.id}>
-                {(item.life_areas as unknown as { icon: string; name: string } | null)?.icon}{" "}
-                {item.title} — {item.due_date}
-              </li>
-            ))}
+            {upcoming.map((item) => {
+              const area = item.life_areas as unknown as { icon: string; name: string } | null;
+              return (
+                <li key={item.id} className="row">
+                  <span>
+                    {area?.icon} {item.title}
+                  </span>
+                  <span className="tag">{item.due_date}</span>
+                </li>
+              );
+            })}
           </ul>
         ) : (
           <p>Nothing coming up.</p>
         )}
       </section>
 
-      <section aria-label="AI Suggestion">
-        <h2>Adea Suggests</h2>
+      <section aria-label="AI Suggestion" style={{ background: "var(--honey-tint)", borderColor: "transparent" }}>
+        <h2 style={{ color: "var(--honey)" }}>Adea Suggests</h2>
         <p>Personalized suggestions are coming soon — this is where Adea will offer one insight at a time.</p>
       </section>
 
-      <section aria-label="Brain Dump shortcut">
-        <Link href="/brain-dump">✏️ Brain Dump — what&apos;s on your mind?</Link>
-      </section>
+      <Link href="/brain-dump" className="cta">
+        ✏️ What&apos;s on your mind?
+      </Link>
     </main>
   );
 }

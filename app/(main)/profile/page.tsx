@@ -7,14 +7,31 @@ export default async function ProfilePage() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  const initial = user?.email?.[0]?.toUpperCase() ?? "?";
+
   return (
     <main>
       <h1>👤 Profile</h1>
-      <p>Email: {user?.email}</p>
-      <form action={logout}>
-        <button type="submit">Log out</button>
-      </form>
-      <p>Subscription management and account deletion/data export are coming soon.</p>
+
+      <div className="row" style={{ marginBottom: 16 }}>
+        <div
+          className="icon-chip"
+          style={{ background: "var(--teal)", color: "#fff", fontFamily: "var(--font-display)" }}
+        >
+          {initial}
+        </div>
+        <span>{user?.email}</span>
+      </div>
+
+      <section aria-label="Account">
+        <h2>Account</h2>
+        <form action={logout}>
+          <button type="submit">Log out</button>
+        </form>
+        <p style={{ fontSize: "0.82rem", color: "var(--ink-soft)" }}>
+          Subscription management and account deletion/data export are coming soon.
+        </p>
+      </section>
     </main>
   );
 }

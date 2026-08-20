@@ -4,11 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 const TABS = [
-  { href: "/", label: "🏠 Home" },
-  { href: "/life-areas", label: "🗂️ Life Areas" },
-  { href: "/brain-dump", label: "✏️ Brain Dump" },
-  { href: "/adea", label: "💬 Adea" },
-  { href: "/profile", label: "👤 Profile" },
+  { href: "/", glyph: "🏠", label: "Home" },
+  { href: "/life-areas", glyph: "🗂️", label: "Life Areas" },
+  { href: "/brain-dump", glyph: "✏️", label: "Brain Dump" },
+  { href: "/adea", glyph: "💬", label: "Adea" },
+  { href: "/profile", glyph: "👤", label: "Profile" },
 ];
 
 export default function BottomNav() {
@@ -22,7 +22,8 @@ export default function BottomNav() {
           return (
             <li key={tab.href}>
               <Link href={tab.href} aria-current={isActive ? "page" : undefined}>
-                {tab.label}
+                <span aria-hidden="true">{tab.glyph}</span>
+                <span>{tab.label}</span>
               </Link>
             </li>
           );
