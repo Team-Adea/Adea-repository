@@ -1,0 +1,11 @@
+node_modules
+.next
+.expo
+dist
+build
+package-lock.json
+*.md
+supabase/migrations
+**/next-env.d.ts
+**/expo-env.d.ts
+**/.expo/
