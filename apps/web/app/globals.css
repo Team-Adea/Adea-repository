@@ -497,3 +497,68 @@ select:focus-visible {
   outline: 2px solid var(--teal);
   outline-offset: 2px;
 }
+
+/* Adea chat (/adea) */
+.chat-log {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 96px;
+}
+
+.chat-empty {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.chat-msg {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.chat-msg.user {
+  align-self: flex-end;
+  background: var(--teal);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-msg.assistant {
+  align-self: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-form {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 72px;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  flex-direction: row;
+  gap: 8px;
+  background: linear-gradient(to top, var(--paper) 70%, transparent);
+}
+
+.chat-form input {
+  flex: 1;
+  background: var(--surface);
+}
+
+.chat-form button {
+  align-self: stretch;
+}
+
+.chat-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
