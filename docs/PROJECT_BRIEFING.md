@@ -8,7 +8,11 @@ Paste this whole file into Claude Code as your first message when starting (or r
 
 Adea is an AI life companion web app. It helps people turn life's chaos into clarity by connecting every important life area (money, goals, health, family, career, and more — 12 total) into one system, instead of managing them in disconnected apps.
 
-Tagline: *"Transform life's chaos into clarity."*
+Brand tagline (logo lockup): *"A clearer you. A brighter tomorrow."*
+Marketing headline: *"Turn your chaos into clarity."*
+Supporting line: *"Your thoughts, plans, goals, and everything in between—connected."*
+
+*(Updated 2026-09-11, founder decision. Replaces the earlier tagline "Transform life's chaos into clarity.")*
 
 Adea's AI personality is a **"partner in life"** — not a mentor, coach, or therapist. Responses must be short, calm, and structured (numbered/bulleted lists, 1-3 questions max, no long paragraphs). Full personality spec below.
 
