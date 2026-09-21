@@ -1,5 +1,5 @@
 /**
- * Adea design tokens — the approved "life dial" system.
+ * Adea design tokens: green primary, cream background, terracotta accent, lavender atmosphere.
  * Single source of truth for color and type, shared by web (app/globals.css)
  * and mobile (React Native styles). If you change a value here, regenerate the
  * web CSS variables from it — don't hand-edit globals.css out of sync.
@@ -20,40 +20,47 @@ export interface ColorScheme {
   coral: string;
   coralTint: string;
   line: string;
+  /** Atmosphere only (soft glow, shadows, backgrounds). Never a fill or text colour. */
+  lavender: string;
+  lavenderGlow: string;
 }
 
 export const lightColors: ColorScheme = {
-  ink: "#16212b",
-  inkSoft: "#46545e",
-  paper: "#e9ede9",
-  paperDeep: "#dbe1dc",
+  ink: "#23201c",
+  inkSoft: "#5f5648",
+  paper: "#fcfaf6",
+  paperDeep: "#f4efe4",
   surface: "#ffffff",
-  surfaceAlt: "#dce3e0",
-  teal: "#2f6f63",
-  tealDeep: "#1f4b43",
-  tealTint: "rgba(47, 111, 99, 0.12)",
-  honey: "#c68a3d",
-  honeyTint: "rgba(198, 138, 61, 0.14)",
-  coral: "#c0523a",
-  coralTint: "rgba(192, 82, 58, 0.12)",
-  line: "#d3dad7",
+  surfaceAlt: "#f5f0e6",
+  teal: "#3a5a40",
+  tealDeep: "#2a4230",
+  tealTint: "rgba(58, 90, 64, 0.12)",
+  honey: "#c56a43",
+  honeyTint: "rgba(197, 106, 67, 0.14)",
+  coral: "#b23c2b",
+  coralTint: "rgba(178, 60, 43, 0.12)",
+  line: "#ebe4d6",
+  lavender: "#9a8fc0",
+  lavenderGlow: "rgba(154, 143, 192, 0.2)",
 };
 
 export const darkColors: ColorScheme = {
-  ink: "#edefec",
-  inkSoft: "#b7bfba",
-  paper: "#121a1f",
-  paperDeep: "#0c1215",
-  surface: "#1b252b",
-  surfaceAlt: "#232f35",
-  teal: "#7cc4b2",
-  tealDeep: "#a9dccf",
-  tealTint: "rgba(124, 196, 178, 0.16)",
-  honey: "#e0a855",
-  honeyTint: "rgba(224, 168, 85, 0.16)",
-  coral: "#e1806a",
-  coralTint: "rgba(225, 128, 106, 0.16)",
-  line: "#2c383e",
+  ink: "#efe9dd",
+  inkSoft: "#b8ae9d",
+  paper: "#17130d",
+  paperDeep: "#0f0c08",
+  surface: "#201b14",
+  surfaceAlt: "#2a241b",
+  teal: "#a3c4a6",
+  tealDeep: "#cfe0cf",
+  tealTint: "rgba(163, 196, 166, 0.16)",
+  honey: "#e08b63",
+  honeyTint: "rgba(224, 139, 99, 0.16)",
+  coral: "#e07a5f",
+  coralTint: "rgba(224, 122, 95, 0.16)",
+  line: "#362f22",
+  lavender: "#a99fd0",
+  lavenderGlow: "rgba(169, 159, 208, 0.2)",
 };
 
 export const radii = { sm: 10, md: 16 } as const;

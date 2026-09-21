@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { login, requestPasswordReset } from "@/app/auth/actions";
+import { login } from "@/app/auth/actions";
+import { AuthHero, GoogleIcon } from "../_components";
+import { PasswordField } from "../_password-field";
 
 export default async function LoginPage({
   searchParams,
@@ -9,37 +11,56 @@ export default async function LoginPage({
   const { error, resetSent } = await searchParams;
 
   return (
-    <main className="auth-main">
-      <div className="mark">A</div>
-      <p className="tagline">Transform life&apos;s chaos into clarity.</p>
-      <h1>Log in to Adea</h1>
-      {error && <p role="alert">{error}</p>}
-      {resetSent && <p role="status">Check your email for a password reset link.</p>}
-      <form action={login}>
-        <label>
-          Email
-          <input type="email" name="email" required autoComplete="email" />
-        </label>
-        <label>
-          Password
-          <input type="password" name="password" required autoComplete="current-password" />
-        </label>
-        <button type="submit">Log in</button>
-      </form>
-      <section aria-label="Forgot password">
-        <form action={requestPasswordReset} style={{ marginBottom: 0 }}>
-          <label>
-            Forgot password? Enter your email
-            <input type="email" name="email" required />
-          </label>
-          <button type="submit" className="btn-ghost">
-            Send reset link
+    <main className="auth">
+      <div className="auth-card">
+        <AuthHero />
+        <div className="auth-form">
+          <h1>Welcome back</h1>
+          <p className="auth-sub">Continue building a clearer, more intentional you.</p>
+
+          {error && <p role="alert">{error}</p>}
+          {resetSent && (
+            <p role="status">Check your email for a password reset link.</p>
+          )}
+
+          <form action={login}>
+            <label className="field">
+              <span className="lbl">Email</span>
+              <input type="email" name="email" required autoComplete="email" />
+            </label>
+            <PasswordField
+              label="Password"
+              name="password"
+              autoComplete="current-password"
+              aside={
+                <Link className="pw-link" href="/forgot-password">
+                  Forgot password?
+                </Link>
+              }
+            />
+            <button type="submit" className="btn-primary">
+              Log in&nbsp;&rarr;
+            </button>
+          </form>
+
+          <div className="or">or</div>
+
+          <button
+            type="button"
+            className="btn-google"
+            disabled
+            aria-disabled="true"
+            title="Google sign-in coming soon"
+          >
+            <GoogleIcon />
+            Continue with Google
           </button>
-        </form>
-      </section>
-      <p>
-        No account yet? <Link href="/signup">Sign up</Link>
-      </p>
+
+          <p className="foot">
+            New to Adea? <Link href="/signup">Create an account</Link>
+          </p>
+        </div>
+      </div>
     </main>
   );
 }

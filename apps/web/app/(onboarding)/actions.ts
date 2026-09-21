@@ -1,24 +1,25 @@
 "use server";
 
 import { redirect } from "next/navigation";
+import type { OnboardingAnswers } from "@adea/core";
 import { createClient } from "@/lib/supabase/server";
+import { AREA, loadOnboarding } from "@/lib/onboarding";
 
-export type OnboardingAnswers = {
-  dream: string;
-  goal: string;
-  moneyRelationship: string;
-  tracksFinances: string;
-  keyPeople: string;
-  fallsThroughCracks: string;
-  overwhelmedBy: string;
-  brainDump: string;
-};
+/** Answers that also become a starting item in a life area. */
+const AREA_ITEMS: { key: keyof OnboardingAnswers; areaId: number; notes?: string }[] = [
+  { key: "dream", areaId: AREA.dreams },
+  { key: "keyPeople", areaId: AREA.family, notes: "Key people in your life" },
+  { key: "fallsThroughCracks", areaId: AREA.daily, notes: "Often falls through the cracks" },
+  { key: "health", areaId: AREA.health, notes: "Something to take better care of" },
+  { key: "career", areaId: AREA.career, notes: "Work and career right now" },
+];
 
-const DREAMS_VISION_AREA_ID = 1;
-const FAMILY_AREA_ID = 5;
-const DAILY_PRODUCTIVITY_AREA_ID = 11;
-
-export async function completeOnboarding(answers: OnboardingAnswers) {
+/**
+ * Saves whatever the user has answered (all of it optional) and sends them to Home.
+ * Safe to run again later: a starting item is only created once per answer, so
+ * finishing the list in several sittings never duplicates anything.
+ */
+export async function saveOnboarding(input: OnboardingAnswers) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -28,76 +29,63 @@ export async function completeOnboarding(answers: OnboardingAnswers) {
     redirect("/login");
   }
 
-  const inserts: PromiseLike<unknown>[] = [];
+  const answers = Object.fromEntries(
+    Object.entries(input).map(([key, value]) => [key, String(value ?? "").trim()]),
+  ) as OnboardingAnswers;
 
-  if (answers.dream.trim()) {
-    inserts.push(
-      supabase.from("life_area_items").insert({
-        user_id: user.id,
-        life_area_id: DREAMS_VISION_AREA_ID,
-        title: answers.dream.trim(),
-      }),
-    );
+  const state = await loadOnboarding(supabase, user.id);
+
+  for (const { key, areaId, notes } of AREA_ITEMS) {
+    const title = answers[key];
+    if (!title) continue;
+    const { data: existing } = await supabase
+      .from("life_area_items")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("life_area_id", areaId)
+      .eq("title", title)
+      .limit(1);
+    if (!existing?.length) {
+      await supabase
+        .from("life_area_items")
+        .insert({ user_id: user.id, life_area_id: areaId, title, notes });
+    }
   }
 
-  if (answers.goal.trim()) {
-    inserts.push(
-      supabase.from("goals").insert({
-        user_id: user.id,
-        title: answers.goal.trim(),
-      }),
-    );
+  if (answers.goal) {
+    const { data: existing } = await supabase
+      .from("goals")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("title", answers.goal)
+      .limit(1);
+    if (!existing?.length) {
+      await supabase.from("goals").insert({ user_id: user.id, title: answers.goal });
+    }
   }
 
-  if (answers.keyPeople.trim()) {
-    inserts.push(
-      supabase.from("life_area_items").insert({
-        user_id: user.id,
-        life_area_id: FAMILY_AREA_ID,
-        title: answers.keyPeople.trim(),
-        notes: "Key people in your life",
-      }),
-    );
+  if (answers.brainDump) {
+    const { data: existing } = await supabase
+      .from("brain_dumps")
+      .select("id")
+      .eq("user_id", user.id)
+      .eq("raw_text", answers.brainDump)
+      .limit(1);
+    if (!existing?.length) {
+      await supabase
+        .from("brain_dumps")
+        .insert({ user_id: user.id, raw_text: answers.brainDump, status: "pending" });
+    }
   }
 
-  if (answers.fallsThroughCracks.trim()) {
-    inserts.push(
-      supabase.from("life_area_items").insert({
-        user_id: user.id,
-        life_area_id: DAILY_PRODUCTIVITY_AREA_ID,
-        title: answers.fallsThroughCracks.trim(),
-        notes: "Often falls through the cracks",
-      }),
-    );
-  }
-
-  if (answers.brainDump.trim()) {
-    inserts.push(
-      supabase.from("brain_dumps").insert({
-        user_id: user.id,
-        raw_text: answers.brainDump.trim(),
-        status: "pending",
-      }),
-    );
-  }
-
-  inserts.push(
-    supabase
-      .from("profiles")
-      .update({
-        onboarding_completed: true,
-        preferences: {
-          onboarding: {
-            money_relationship: answers.moneyRelationship.trim() || null,
-            tracks_finances: answers.tracksFinances.trim() || null,
-            overwhelmed_by: answers.overwhelmedBy.trim() || null,
-          },
-        },
-      })
-      .eq("id", user.id),
-  );
-
-  await Promise.all(inserts);
+  await supabase
+    .from("profiles")
+    .update({
+      onboarding_completed: true,
+      full_name: answers.name || state.fullName,
+      preferences: { ...state.preferences, onboarding_answers: answers },
+    })
+    .eq("id", user.id);
 
   redirect("/");
 }

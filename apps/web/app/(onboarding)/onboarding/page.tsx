@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { loadOnboarding } from "@/lib/onboarding";
 import OnboardingFlow from "@/components/OnboardingFlow";
 
 export default async function OnboardingPage() {
@@ -8,15 +8,7 @@ export default async function OnboardingPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("onboarding_completed")
-    .eq("id", user!.id)
-    .single();
+  const state = await loadOnboarding(supabase, user!.id);
 
-  if (profile?.onboarding_completed) {
-    redirect("/");
-  }
-
-  return <OnboardingFlow />;
+  return <OnboardingFlow initialAnswers={state.answers} returning={state.seen} />;
 }

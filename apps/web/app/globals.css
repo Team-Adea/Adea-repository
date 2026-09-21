@@ -1,61 +1,81 @@
 :root {
-  --ink: #16212b;
-  --ink-soft: #46545e;
-  --paper: #e9ede9;
-  --paper-deep: #dbe1dc;
+  /* Palette roles:
+     green      = primary        -> --teal, --teal-deep, --teal-tint
+     cream      = background      -> --paper, --paper-deep, --surface, --surface-alt
+     terracotta = small accent    -> --honey, --honey-tint (AI-suggestion / warmth moments)
+     lavender   = atmosphere only -> --lavender, --lavender-glow, shadows, bg glow. Never a fill or text.
+     --coral is reserved for danger / urgent, kept distinct from the terracotta accent. */
+  --ink: #23201c;
+  --ink-soft: #5f5648;
+  --paper: #fcfaf6;
+  --paper-deep: #f4efe4;
   --surface: #ffffff;
-  --surface-alt: #dce3e0;
-  --teal: #2f6f63;
-  --teal-deep: #1f4b43;
-  --teal-tint: rgba(47, 111, 99, 0.12);
-  --honey: #c68a3d;
-  --honey-tint: rgba(198, 138, 61, 0.14);
-  --coral: #c0523a;
-  --coral-tint: rgba(192, 82, 58, 0.12);
-  --line: #d3dad7;
+  --surface-alt: #f5f0e6;
+  --teal: #3a5a40;
+  --teal-deep: #2a4230;
+  --teal-tint: rgba(58, 90, 64, 0.12);
+  --honey: #c56a43;
+  --honey-tint: rgba(197, 106, 67, 0.14);
+  --coral: #b23c2b;
+  --coral-tint: rgba(178, 60, 43, 0.12);
+  --waves: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 900' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='%23a898dc'%3E%3Cpath opacity='.42' d='M0 170C80 185 175 250 270 370C180 340 85 322 0 335Z'/%3E%3Cpath opacity='.28' d='M0 330C70 340 140 380 200 450C120 425 55 420 0 430Z'/%3E%3Cpath opacity='.35' d='M400 420C335 440 285 495 245 585C300 568 350 560 400 588Z'/%3E%3Cpath opacity='.25' d='M400 560C365 590 335 640 320 710C350 700 375 698 400 705Z'/%3E%3Cpath opacity='.39' d='M0 690C85 712 165 785 235 900H0Z'/%3E%3Cpath opacity='.28' d='M0 770C60 792 118 845 160 900H0Z'/%3E%3C/g%3E%3Cpath fill='%23d9a8b8' opacity='.25' d='M0 830C45 845 90 875 115 900H0Z'/%3E%3C/svg%3E");
+  --lavender: #9a8fc0;
+  --lavender-glow: rgba(154, 143, 192, 0.2);
+  --lavender-wash: rgba(154, 143, 192, 0.18);
+  --line: #ebe4d6;
   --radius: 16px;
   --radius-sm: 10px;
-  --shadow: 0 1px 3px rgba(22, 33, 43, 0.06), 0 1px 2px rgba(22, 33, 43, 0.04);
+  --shadow: 0 1px 2px rgba(74, 66, 104, 0.05), 0 10px 26px -14px rgba(74, 66, 104, 0.22);
+  --ring-track: rgba(58, 90, 64, 0.14);
 
   --font-display: var(--font-fraunces), Georgia, serif;
   --font-body: var(--font-work-sans), -apple-system, sans-serif;
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-hand: var(--font-caveat), "Bradley Hand", "Segoe Script", cursive;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --ink: #edefec;
-    --ink-soft: #b7bfba;
-    --paper: #121a1f;
-    --paper-deep: #0c1215;
-    --surface: #1b252b;
-    --surface-alt: #232f35;
-    --teal: #7cc4b2;
-    --teal-deep: #a9dccf;
-    --teal-tint: rgba(124, 196, 178, 0.16);
-    --honey: #e0a855;
-    --honey-tint: rgba(224, 168, 85, 0.16);
-    --coral: #e1806a;
-    --coral-tint: rgba(225, 128, 106, 0.16);
-    --line: #2c383e;
+    --ink: #efe9dd;
+    --ink-soft: #b8ae9d;
+    --paper: #17130d;
+    --paper-deep: #0f0c08;
+    --surface: #201b14;
+    --surface-alt: #2a241b;
+    --teal: #a3c4a6;
+    --teal-deep: #cfe0cf;
+    --teal-tint: rgba(163, 196, 166, 0.16);
+    --honey: #e08b63;
+    --honey-tint: rgba(224, 139, 99, 0.16);
+    --coral: #e07a5f;
+    --coral-tint: rgba(224, 122, 95, 0.16);
+    --lavender: #a99fd0;
+    --lavender-glow: rgba(169, 159, 208, 0.2);
+    --lavender-wash: rgba(169, 159, 208, 0.16);
+    --line: #362f22;
+    --ring-track: rgba(163, 196, 166, 0.2);
   }
 }
 
 :root[data-theme="dark"] {
-  --ink: #edefec;
-  --ink-soft: #b7bfba;
-  --paper: #121a1f;
-  --paper-deep: #0c1215;
-  --surface: #1b252b;
-  --surface-alt: #232f35;
-  --teal: #7cc4b2;
-  --teal-deep: #a9dccf;
-  --teal-tint: rgba(124, 196, 178, 0.16);
-  --honey: #e0a855;
-  --honey-tint: rgba(224, 168, 85, 0.16);
-  --coral: #e1806a;
-  --coral-tint: rgba(225, 128, 106, 0.16);
-  --line: #2c383e;
+  --ink: #efe9dd;
+  --ink-soft: #b8ae9d;
+  --paper: #17130d;
+  --paper-deep: #0f0c08;
+  --surface: #201b14;
+  --surface-alt: #2a241b;
+  --teal: #a3c4a6;
+  --teal-deep: #cfe0cf;
+  --teal-tint: rgba(163, 196, 166, 0.16);
+  --honey: #e08b63;
+  --honey-tint: rgba(224, 139, 99, 0.16);
+  --coral: #e07a5f;
+  --coral-tint: rgba(224, 122, 95, 0.16);
+  --lavender: #a99fd0;
+  --lavender-glow: rgba(169, 159, 208, 0.2);
+  --lavender-wash: rgba(169, 159, 208, 0.16);
+  --line: #362f22;
+  --ring-track: rgba(163, 196, 166, 0.2);
 }
 
 * {
@@ -242,7 +262,9 @@ main.auth-main {
   justify-content: center;
   padding-top: 56px;
   padding-bottom: 56px;
-  background: radial-gradient(circle at 50% 0%, var(--teal-tint), transparent 60%);
+  background:
+    radial-gradient(circle at 50% -8%, var(--lavender-glow), transparent 55%),
+    radial-gradient(circle at 50% 0%, var(--teal-tint), transparent 62%);
 }
 
 main.auth-main .mark {
@@ -251,6 +273,304 @@ main.auth-main .mark {
   border-radius: 18px;
   font-size: 1.5rem;
   margin-bottom: 14px;
+}
+
+/* ============================================================
+   Auth screens — Direction E (plant)
+   Used by /login, /signup, /forgot-password
+   ============================================================ */
+main.auth {
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px 20px 64px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  /* Cream base with a soft light bloom behind the plant. The lavender lives in
+     main.auth::before as big translucent wave shapes (rolling hills) sweeping in
+     from the left and right edges, like the approved illustration. */
+  background:
+    radial-gradient(125% 44% at 50% -8%, var(--surface), transparent 60%),
+    radial-gradient(60% 36% at 92% 4%, var(--lavender-glow), transparent 72%),
+    var(--paper);
+  background-repeat: no-repeat;
+}
+
+main.auth::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  max-width: 720px;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+  background: var(--waves) center / cover no-repeat;
+  filter: blur(4px);
+}
+
+@media (min-width: 721px) {
+  main.auth::before {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) main.auth::before {
+    opacity: 0.55;
+  }
+}
+:root[data-theme="dark"] main.auth::before {
+  opacity: 0.55;
+}
+
+/* No card chrome — the page background runs edge to edge, the plant and form
+   sit directly on it. max-width just keeps line lengths readable. */
+.auth-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 424px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.auth-hero {
+  position: relative;
+  padding: 24px 22px 0;
+}
+
+.auth-hero .brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.auth-hero .wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2.55rem;
+  line-height: 1;
+  color: var(--teal-deep);
+  display: inline-flex;
+  align-items: flex-start;
+}
+
+.auth-hero .sprout {
+  width: 26px;
+  height: 28px;
+  margin: -1px 0 0 -8px;
+  flex-shrink: 0;
+}
+
+.auth-hero .brand-line {
+  font-size: 0.64rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding-left: 0.34em;
+}
+
+.auth-hero .hero-art {
+  position: relative;
+  height: 340px;
+  margin-top: 6px;
+  overflow: hidden;
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent, #000 4%, #000 84%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, transparent, #000 4%, #000 84%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.auth-hero .hero-art img {
+  position: absolute;
+  left: 50%;
+  top: -48px;
+  transform: translateX(-50%);
+  width: 104%;
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+}
+
+.auth-hero--compact {
+  padding-bottom: 22px;
+}
+.auth-hero--compact + .auth-form {
+  margin-top: 0;
+}
+
+.auth-form {
+  position: relative;
+  padding: 0 26px 30px;
+  margin-top: -16px;
+}
+
+.auth-form h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.9rem;
+  text-align: center;
+  margin: 0 0 4px;
+}
+
+.auth-form .auth-sub {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+
+.auth-form form {
+  margin-bottom: 12px;
+  gap: 13px;
+}
+
+.auth-form .field {
+  gap: 6px;
+}
+
+.auth-form .field .lbl {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.auth-form .pw-row {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.auth-form .pw-row .pw-link {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.auth-form input {
+  width: 100%;
+  background: var(--surface);
+}
+
+.btn-primary {
+  align-self: stretch;
+  width: 100%;
+  text-align: center;
+  background: var(--teal-deep);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: var(--teal);
+}
+
+/* Dark mode: the light mint --teal-deep would wash out under white text. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .btn-primary {
+    background: var(--teal);
+    color: #16221a;
+  }
+}
+:root[data-theme="dark"] .btn-primary {
+  background: var(--teal);
+  color: #16221a;
+}
+
+.auth-form .or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+}
+
+.auth-form .or::before,
+.auth-form .or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.btn-google {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 11px 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  cursor: not-allowed;
+}
+
+.btn-google:hover {
+  background: var(--surface-alt);
+}
+
+.btn-google svg {
+  width: 18px;
+  height: 18px;
+}
+
+.auth-form .foot {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 16px 0 0;
+}
+
+.auth-back {
+  display: inline-block;
+  margin: 0 0 14px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 460px) {
+  main.auth {
+    padding: 0;
+  }
+  .auth-card {
+    max-width: none;
+    min-height: 100vh;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
 }
 
 .tagline {

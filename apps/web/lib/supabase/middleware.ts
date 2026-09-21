@@ -1,7 +1,8 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-const PUBLIC_PATHS = ["/login", "/signup", "/auth"];
+// /reset-password is deliberately not public: the emailed link signs the user in first.
+const PUBLIC_PATHS = ["/login", "/signup", "/forgot-password", "/check-email", "/auth"];
 
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });

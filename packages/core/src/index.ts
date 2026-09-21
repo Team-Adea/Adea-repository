@@ -1,4 +1,7 @@
 export * from "./life-areas";
+export * from "./onboarding";
+export * from "./inspiration";
+export * from "./encouragement";
 export * from "./transactions";
 export * from "./personality";
 export * from "./tokens";

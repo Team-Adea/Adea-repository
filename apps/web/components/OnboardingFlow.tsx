@@ -1,151 +1,162 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { completeOnboarding, type OnboardingAnswers } from "@/app/(onboarding)/actions";
+import {
+  ONBOARDING_QUESTIONS,
+  ONBOARDING_SECTIONS,
+  onboardingProgress,
+  type OnboardingAnswers,
+} from "@adea/core";
+import { saveOnboarding } from "@/app/(onboarding)/actions";
+import { AuthHero } from "@/app/(auth)/_components";
 
-const QUESTIONS: {
-  key: keyof Omit<OnboardingAnswers, "brainDump">;
-  question: string;
-  placeholder: string;
-}[] = [
+const EXPECT = [
   {
-    key: "dream",
-    question: "What's a dream you're chasing right now?",
-    placeholder: "e.g. Take my kids to Japan before they're teenagers…",
+    title: "A short list of questions",
+    body: "Answer as many or as few as you like. Every one is optional, and it takes about three minutes.",
   },
   {
-    key: "goal",
-    question: "Do you have a specific goal in mind right now?",
-    placeholder: "e.g. Save $5,000 for an emergency fund",
+    title: "Adea gets to know you",
+    body: "Your answers shape your dashboard, so it feels like yours from the very first day.",
   },
   {
-    key: "moneyRelationship",
-    question: "How would you describe your relationship with money?",
-    placeholder: "e.g. I avoid looking at it until I have to",
-  },
-  {
-    key: "tracksFinances",
-    question: "Do you currently track your income and expenses?",
-    placeholder: "e.g. Not really, it's all in my head",
-  },
-  {
-    key: "keyPeople",
-    question: "Who are the key people in your life right now?",
-    placeholder: "e.g. My partner, my mom, my best friend Sara",
-  },
-  {
-    key: "fallsThroughCracks",
-    question: "What usually falls through the cracks?",
-    placeholder: "e.g. Doctor appointments, birthdays",
-  },
-  {
-    key: "overwhelmedBy",
-    question: "What feels most overwhelming right now?",
-    placeholder: "e.g. Juggling work and family time",
+    title: "Finish whenever you want",
+    body: "Set up later and pick up where you left off. Your progress shows on your Home screen.",
   },
 ];
 
-const EMPTY_ANSWERS: OnboardingAnswers = {
-  dream: "",
-  goal: "",
-  moneyRelationship: "",
-  tracksFinances: "",
-  keyPeople: "",
-  fallsThroughCracks: "",
-  overwhelmedBy: "",
-  brainDump: "",
-};
-
-export default function OnboardingFlow() {
-  const [step, setStep] = useState(0);
-  const [answers, setAnswers] = useState<OnboardingAnswers>(EMPTY_ANSWERS);
+export default function OnboardingFlow({
+  initialAnswers,
+  returning,
+}: {
+  initialAnswers: OnboardingAnswers;
+  /** Already been through the welcome step: go straight to the list. */
+  returning: boolean;
+}) {
+  const [step, setStep] = useState<"welcome" | "list">(returning ? "list" : "welcome");
+  const [answers, setAnswers] = useState<OnboardingAnswers>(initialAnswers);
   const [isPending, startTransition] = useTransition();
 
-  const finish = (finalAnswers: OnboardingAnswers) => {
+  const save = () => {
     startTransition(async () => {
-      await completeOnboarding(finalAnswers);
+      await saveOnboarding(answers);
     });
   };
 
-  if (step === 0) {
+  if (step === "welcome") {
     return (
-      <main>
-        <div className="mark">A</div>
-        <h1>Let&apos;s bring it all together.</h1>
-        <p className="lede">
-          Adea helps you see your whole life clearly — money, goals, health, family, and more — in
-          one calm place. A few quick questions first, all optional.
-        </p>
-        <button type="button" style={{ width: "100%" }} onClick={() => setStep(1)}>
-          Get started
-        </button>
-      </main>
-    );
-  }
+      <main className="auth">
+        <div className="auth-card">
+          <AuthHero />
+          <div className="auth-form">
+            <h1>Let&rsquo;s bring it all together.</h1>
+            <p className="auth-sub">
+              Adea helps you see your whole life clearly, from money and goals to health and family,
+              all in one calm place.
+            </p>
 
-  if (step >= 1 && step <= QUESTIONS.length) {
-    const q = QUESTIONS[step - 1];
-    const value = answers[q.key];
+            <div className="expect">
+              <p className="expect-title">What to expect next</p>
+              <ol>
+                {EXPECT.map((item, i) => (
+                  <li key={item.title}>
+                    <span className="expect-n" aria-hidden="true">
+                      {i + 1}
+                    </span>
+                    <div>
+                      <strong>{item.title}</strong>
+                      <p>{item.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
 
-    return (
-      <main>
-        <div className="dial-progress">
-          {QUESTIONS.map((_, i) => (
-            <span key={i} className={i < step ? "done" : ""} />
-          ))}
+            <button type="button" className="btn-primary" onClick={() => setStep("list")}>
+              Get started&nbsp;&rarr;
+            </button>
+            <button type="button" className="btn-quiet" disabled={isPending} onClick={save}>
+              {isPending ? "One moment..." : "Set up later"}
+            </button>
+          </div>
         </div>
-        <p className="step-meta">
-          {step} of {QUESTIONS.length}
-        </p>
-        <h1>{q.question}</h1>
-        <p className="lede">
-          Skip anything you&apos;d rather not answer yet — you can always add it later.
-        </p>
-        <textarea
-          rows={3}
-          placeholder={q.placeholder}
-          value={value}
-          onChange={(e) => setAnswers({ ...answers, [q.key]: e.target.value })}
-        />
-        <button type="button" style={{ width: "100%" }} onClick={() => setStep(step + 1)}>
-          Continue
-        </button>
-        <button type="button" className="btn-link" onClick={() => setStep(step + 1)}>
-          Skip this one
-        </button>
       </main>
     );
   }
+
+  const progress = onboardingProgress(answers);
 
   return (
-    <main>
-      <h1>What&apos;s on your mind right now?</h1>
-      <p className="lede">
-        One last thing — capture anything on your mind. Adea will start learning to sort these
-        automatically soon.
-      </p>
-      <textarea
-        rows={4}
-        placeholder="e.g. Pay the internet bill by Friday"
-        value={answers.brainDump}
-        onChange={(e) => setAnswers({ ...answers, brainDump: e.target.value })}
-      />
-      <button
-        type="button"
-        style={{ width: "100%" }}
-        disabled={isPending}
-        onClick={() => finish(answers)}
-      >
-        {isPending ? "Setting up your Dashboard…" : "Finish"}
-      </button>
-      <button
-        type="button"
-        className="btn-link"
-        disabled={isPending}
-        onClick={() => finish(answers)}
-      >
-        Skip and go to my Dashboard
-      </button>
+    <main className="auth">
+      <div className="auth-card onboard">
+        <AuthHero compact />
+        <div className="auth-form">
+          <h1>Tell Adea about you</h1>
+          <p className="auth-sub">
+            Answer what you like. Everything is optional, and you can finish later from your Home
+            screen.
+          </p>
+
+          <div className="meter" role="status">
+            <div className="meter-row">
+              <span>
+                {progress.answered} of {progress.total} answered
+              </span>
+              <span className="figure">{progress.percent}%</span>
+            </div>
+            <div className="gauge">
+              <span style={{ width: `${progress.percent}%` }} />
+            </div>
+          </div>
+
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              save();
+            }}
+          >
+            {ONBOARDING_SECTIONS.map((section) => (
+              <fieldset key={section} className="ob-section">
+                <legend>{section}</legend>
+                {ONBOARDING_QUESTIONS.filter((q) => q.section === section).map((q) => (
+                  <label key={q.key} className="ob-q">
+                    <span className="ob-label">{q.question}</span>
+                    {q.short ? (
+                      <input
+                        type="text"
+                        autoComplete="given-name"
+                        placeholder={q.placeholder}
+                        value={answers[q.key]}
+                        onChange={(e) => setAnswers({ ...answers, [q.key]: e.target.value })}
+                      />
+                    ) : (
+                      <textarea
+                        rows={2}
+                        placeholder={q.placeholder}
+                        value={answers[q.key]}
+                        onChange={(e) => setAnswers({ ...answers, [q.key]: e.target.value })}
+                      />
+                    )}
+                  </label>
+                ))}
+              </fieldset>
+            ))}
+
+            <div className="ob-actions">
+              <button type="submit" className="btn-primary" disabled={isPending}>
+                {isPending
+                  ? "Saving..."
+                  : progress.answered > 0
+                    ? "Save and go to my dashboard"
+                    : "Go to my dashboard"}
+              </button>
+              <button type="button" className="btn-quiet" disabled={isPending} onClick={save}>
+                Set up later
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
     </main>
   );
 }
