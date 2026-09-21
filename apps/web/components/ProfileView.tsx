@@ -1,11 +1,11 @@
 import Link from "next/link";
-import type { OnboardingProgress } from "@adea/core";
+import { CURRENCIES, currencySymbol, type OnboardingProgress } from "@adea/core";
 import { logout } from "@/app/auth/actions";
-import { updateName } from "@/app/(main)/profile/actions";
+import { updateCurrency, updateName } from "@/app/(main)/profile/actions";
 import ProgressRing from "@/components/ProgressRing";
 
 const SETTINGS = [
-  { icon: "⚙️", label: "Preferences", hint: "Currency, language, theme" },
+  { icon: "⚙️", label: "Preferences", hint: "Language and theme" },
   { icon: "🔔", label: "Notifications", hint: "Reminders and nudges" },
   { icon: "🔒", label: "Privacy and data", hint: "What Adea remembers" },
   { icon: "📤", label: "Export my data", hint: "Download everything" },
@@ -20,7 +20,8 @@ export interface ProfileData {
   goals: number;
   items: number;
   dumps: number;
-  saved?: boolean;
+  saved?: "name" | "currency";
+  currency: { code: string; detected: string; choice: string };
 }
 
 export default function ProfileView({
@@ -32,6 +33,7 @@ export default function ProfileView({
   items,
   dumps,
   saved,
+  currency,
 }: ProfileData) {
   const initial = (name ?? email ?? "?")[0].toUpperCase();
 
@@ -99,7 +101,24 @@ export default function ProfileView({
           </label>
           <button type="submit">Save</button>
         </form>
-        {saved && <p role="status">Saved. Adea will use this name from now on.</p>}
+        {saved === "name" && <p role="status">Saved. Adea will use this name from now on.</p>}
+        <form action={updateCurrency} className="name-form name-form-gap">
+          <label>
+            <span className="lbl">Currency for your amounts</span>
+            <select name="currency" defaultValue={currency.choice}>
+              <option value="auto">
+                Automatic ({currencySymbol(currency.detected)} {currency.detected})
+              </option>
+              {CURRENCIES.map((c) => (
+                <option key={c.code} value={c.code}>
+                  {c.code} · {c.name}
+                </option>
+              ))}
+            </select>
+          </label>
+          <button type="submit">Save</button>
+        </form>
+        {saved === "currency" && <p role="status">Saved. Amounts now show in {currency.code}.</p>}
       </section>
 
       <section aria-label="Settings">

@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { loadOnboarding } from "@/lib/onboarding";
+import { currencyFor } from "@/lib/currency";
 import DashboardView from "@/components/DashboardView";
 import Encouragement from "@/components/Encouragement";
 
@@ -71,6 +72,7 @@ export default async function DashboardPage() {
           />
         </Suspense>
       }
+      currency={(await currencyFor(onboarding.preferences)).code}
       weeklySpend={(expenses ?? []).reduce((sum, t) => sum + Number(t.amount), 0)}
       goalCount={goalCount.count ?? 0}
       dueCount={dueCount.count ?? 0}

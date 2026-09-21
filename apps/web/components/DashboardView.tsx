@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { OnboardingProgress } from "@adea/core";
+import { formatMoney, type OnboardingProgress } from "@adea/core";
 import Greeting from "@/components/Greeting";
 import ProgressRing from "@/components/ProgressRing";
 
@@ -9,6 +9,8 @@ export interface DashboardData {
   /** The quiet daily line under the greeting (streams in on its own). */
   encouragement?: React.ReactNode;
   weeklySpend: number;
+  /** Currency code to show amounts in, e.g. "PHP". */
+  currency: string;
   goalCount: number;
   dueCount: number;
   goals: { id: string; title: string; progress: number }[];
@@ -22,6 +24,7 @@ export default function DashboardView({
   progress,
   encouragement,
   weeklySpend,
+  currency,
   goalCount,
   dueCount,
   goals,
@@ -77,7 +80,7 @@ export default function DashboardView({
           <span className="stat-icon" aria-hidden="true">
             💰
           </span>
-          <span className="stat-value figure">${formatMoney(weeklySpend)}</span>
+          <span className="stat-value figure">{formatMoney(weeklySpend, currency)}</span>
           <span className="stat-label">Spent this week</span>
         </Link>
         <Link href="/life-areas/goals-planning" className="stat">
@@ -153,10 +156,6 @@ export default function DashboardView({
       </section>
     </main>
   );
-}
-
-function formatMoney(value: number) {
-  return value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 function shortDate(iso: string) {

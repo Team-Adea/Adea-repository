@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { loadOnboarding } from "@/lib/onboarding";
+import { currencyFor } from "@/lib/currency";
 import ProfileView from "@/components/ProfileView";
 
 export default async function ProfilePage({
@@ -36,7 +37,8 @@ export default async function ProfilePage({
       goals={goals.count ?? 0}
       items={items.count ?? 0}
       dumps={dumps.count ?? 0}
-      saved={Boolean(saved)}
+      saved={saved === "name" || saved === "currency" ? saved : undefined}
+      currency={await currencyFor(onboarding.preferences)}
     />
   );
 }

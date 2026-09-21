@@ -452,8 +452,25 @@ main.prof > section.prof-hero {
   background: var(--surface);
 }
 
+.name-form select {
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.name-form-gap {
+  margin-top: 14px;
+}
+
 .name-form button {
   align-self: flex-end;
+  flex-shrink: 0;
+  min-width: 84px;
 }
 
 .settings {

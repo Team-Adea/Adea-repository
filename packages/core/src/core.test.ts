@@ -4,6 +4,7 @@ import { filterTransactions, type Transaction } from "./transactions";
 import { hasOffPartnerTone } from "./personality";
 import { goalNudge, inspirationDeck } from "./inspiration";
 import { buildEncouragementPrompt, cleanEncouragement } from "./encouragement";
+import { detectCurrency, formatMoney, resolveCurrency } from "./currency";
 import {
   ONBOARDING_QUESTIONS,
   ONBOARDING_SECTIONS,
@@ -46,6 +47,29 @@ describe("daily inspiration", () => {
       /past halfway on "Save"/,
     );
     expect(goalNudge([{ title: "Save", progress: 95 }])?.text).toMatch(/almost there/);
+  });
+});
+
+describe("currency", () => {
+  it("detects from the country first, then the browser language, else USD", () => {
+    expect(detectCurrency({ country: "PH" })).toBe("PHP");
+    expect(detectCurrency({ country: "ph", acceptLanguage: "en-US" })).toBe("PHP");
+    expect(detectCurrency({ acceptLanguage: "en-PH,en;q=0.9" })).toBe("PHP");
+    expect(detectCurrency({ acceptLanguage: "fr-FR,fr;q=0.8" })).toBe("EUR");
+    expect(detectCurrency({ acceptLanguage: "en" })).toBe("USD");
+    expect(detectCurrency({})).toBe("USD");
+  });
+
+  it("lets a manual choice win over detection, ignoring junk", () => {
+    expect(resolveCurrency("auto", "PHP")).toBe("PHP");
+    expect(resolveCurrency("EUR", "PHP")).toBe("EUR");
+    expect(resolveCurrency("XXX", "PHP")).toBe("PHP");
+    expect(resolveCurrency(undefined, "GBP")).toBe("GBP");
+  });
+
+  it("formats amounts with the right symbol", () => {
+    expect(formatMoney(1240.5, "PHP")).toBe("\u20B11,240.50");
+    expect(formatMoney(1240.5, "USD")).toBe("$1,240.50");
   });
 });
 

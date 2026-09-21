@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
+import { formatMoney } from "@adea/core";
 import { createClient } from "@/lib/supabase/server";
+import { currencyFor } from "@/lib/currency";
 import { addLifeAreaItem, addTransaction } from "@/app/(main)/life-areas/actions";
 
 export default async function LifeAreaDetailPage({
@@ -22,6 +24,14 @@ export default async function LifeAreaDetailPage({
   if (!area) notFound();
 
   if (area.slug === "money") {
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("preferences")
+      .eq("id", user!.id)
+      .single();
+    const { code: currency } = await currencyFor(
+      (profile?.preferences ?? {}) as Record<string, unknown>,
+    );
     const { data: transactions } = await supabase
       .from("transactions")
       .select("id, type, amount, category, description, date")
@@ -83,7 +93,7 @@ export default async function LifeAreaDetailPage({
                     <span className="tag" style={{ marginRight: 8 }}>
                       {t.type}
                     </span>
-                    <span className="figure">${Number(t.amount).toFixed(2)}</span>
+                    <span className="figure">{formatMoney(Number(t.amount), currency)}</span>
                   </span>
                 </li>
               ))}
