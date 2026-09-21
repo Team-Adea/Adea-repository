@@ -1,0 +1,884 @@
+:root {
+  /* Palette roles:
+     green      = primary        -> --teal, --teal-deep, --teal-tint
+     cream      = background      -> --paper, --paper-deep, --surface, --surface-alt
+     terracotta = small accent    -> --honey, --honey-tint (AI-suggestion / warmth moments)
+     lavender   = atmosphere only -> --lavender, --lavender-glow, shadows, bg glow. Never a fill or text.
+     --coral is reserved for danger / urgent, kept distinct from the terracotta accent. */
+  --ink: #23201c;
+  --ink-soft: #5f5648;
+  --paper: #fcfaf6;
+  --paper-deep: #f4efe4;
+  --surface: #ffffff;
+  --surface-alt: #f5f0e6;
+  --teal: #3a5a40;
+  --teal-deep: #2a4230;
+  --teal-tint: rgba(58, 90, 64, 0.12);
+  --honey: #c56a43;
+  --honey-tint: rgba(197, 106, 67, 0.14);
+  --coral: #b23c2b;
+  --coral-tint: rgba(178, 60, 43, 0.12);
+  --waves: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 900' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='%23a898dc'%3E%3Cpath opacity='.42' d='M0 170C80 185 175 250 270 370C180 340 85 322 0 335Z'/%3E%3Cpath opacity='.28' d='M0 330C70 340 140 380 200 450C120 425 55 420 0 430Z'/%3E%3Cpath opacity='.35' d='M400 420C335 440 285 495 245 585C300 568 350 560 400 588Z'/%3E%3Cpath opacity='.25' d='M400 560C365 590 335 640 320 710C350 700 375 698 400 705Z'/%3E%3Cpath opacity='.39' d='M0 690C85 712 165 785 235 900H0Z'/%3E%3Cpath opacity='.28' d='M0 770C60 792 118 845 160 900H0Z'/%3E%3C/g%3E%3Cpath fill='%23d9a8b8' opacity='.25' d='M0 830C45 845 90 875 115 900H0Z'/%3E%3C/svg%3E");
+  --lavender: #9a8fc0;
+  --lavender-glow: rgba(154, 143, 192, 0.2);
+  --lavender-wash: rgba(154, 143, 192, 0.18);
+  --line: #ebe4d6;
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 1px 2px rgba(74, 66, 104, 0.05), 0 10px 26px -14px rgba(74, 66, 104, 0.22);
+  --ring-track: rgba(58, 90, 64, 0.14);
+
+  --font-display: var(--font-fraunces), Georgia, serif;
+  --font-body: var(--font-work-sans), -apple-system, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+  --font-hand: var(--font-caveat), "Bradley Hand", "Segoe Script", cursive;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ink: #efe9dd;
+    --ink-soft: #b8ae9d;
+    --paper: #17130d;
+    --paper-deep: #0f0c08;
+    --surface: #201b14;
+    --surface-alt: #2a241b;
+    --teal: #a3c4a6;
+    --teal-deep: #cfe0cf;
+    --teal-tint: rgba(163, 196, 166, 0.16);
+    --honey: #e08b63;
+    --honey-tint: rgba(224, 139, 99, 0.16);
+    --coral: #e07a5f;
+    --coral-tint: rgba(224, 122, 95, 0.16);
+    --lavender: #a99fd0;
+    --lavender-glow: rgba(169, 159, 208, 0.2);
+    --lavender-wash: rgba(169, 159, 208, 0.16);
+    --line: #362f22;
+    --ring-track: rgba(163, 196, 166, 0.2);
+  }
+}
+
+:root[data-theme="dark"] {
+  --ink: #efe9dd;
+  --ink-soft: #b8ae9d;
+  --paper: #17130d;
+  --paper-deep: #0f0c08;
+  --surface: #201b14;
+  --surface-alt: #2a241b;
+  --teal: #a3c4a6;
+  --teal-deep: #cfe0cf;
+  --teal-tint: rgba(163, 196, 166, 0.16);
+  --honey: #e08b63;
+  --honey-tint: rgba(224, 139, 99, 0.16);
+  --coral: #e07a5f;
+  --coral-tint: rgba(224, 122, 95, 0.16);
+  --lavender: #a99fd0;
+  --lavender-glow: rgba(169, 159, 208, 0.2);
+  --lavender-wash: rgba(169, 159, 208, 0.16);
+  --line: #362f22;
+  --ring-track: rgba(163, 196, 166, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 28px 20px 104px;
+}
+
+h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.5rem;
+  margin: 0 0 4px;
+  text-wrap: balance;
+}
+
+h2 {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 10px;
+}
+
+p {
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+a {
+  color: var(--teal);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Dashboard header row */
+main > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+main > header form {
+  margin: 0;
+}
+
+main > header button {
+  background: transparent;
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+  font-weight: 500;
+}
+
+main > header button:hover {
+  background: var(--surface-alt);
+  color: var(--ink);
+}
+
+/* Content sections / cards */
+main > section {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+form label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid var(--teal);
+  outline-offset: 1px;
+  border-color: var(--teal);
+}
+
+button {
+  align-self: flex-start;
+  background: var(--teal);
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--teal-deep);
+}
+
+a.cta {
+  display: block;
+  text-align: center;
+  background: var(--teal);
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 999px;
+}
+
+a.cta:hover {
+  background: var(--teal-deep);
+  text-decoration: none;
+}
+
+.mark {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: var(--teal);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+}
+
+main.auth-main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 56px;
+  padding-bottom: 56px;
+  background:
+    radial-gradient(circle at 50% -8%, var(--lavender-glow), transparent 55%),
+    radial-gradient(circle at 50% 0%, var(--teal-tint), transparent 62%);
+}
+
+main.auth-main .mark {
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  font-size: 1.5rem;
+  margin-bottom: 14px;
+}
+
+/* ============================================================
+   Auth screens — Direction E (plant)
+   Used by /login, /signup, /forgot-password
+   ============================================================ */
+main.auth {
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 40px 20px 64px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  /* Cream base with a soft light bloom behind the plant. The lavender lives in
+     main.auth::before as big translucent wave shapes (rolling hills) sweeping in
+     from the left and right edges, like the approved illustration. */
+  background:
+    radial-gradient(125% 44% at 50% -8%, var(--surface), transparent 60%),
+    radial-gradient(60% 36% at 92% 4%, var(--lavender-glow), transparent 72%),
+    var(--paper);
+  background-repeat: no-repeat;
+}
+
+main.auth::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  max-width: 720px;
+  transform: translateX(-50%);
+  z-index: 0;
+  pointer-events: none;
+  background: var(--waves) center / cover no-repeat;
+  filter: blur(4px);
+}
+
+@media (min-width: 721px) {
+  main.auth::before {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 14%, #000 86%, transparent);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) main.auth::before {
+    opacity: 0.55;
+  }
+}
+:root[data-theme="dark"] main.auth::before {
+  opacity: 0.55;
+}
+
+/* No card chrome — the page background runs edge to edge, the plant and form
+   sit directly on it. max-width just keeps line lengths readable. */
+.auth-card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 424px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.auth-hero {
+  position: relative;
+  padding: 24px 22px 0;
+}
+
+.auth-hero .brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.auth-hero .wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 2.55rem;
+  line-height: 1;
+  color: var(--teal-deep);
+  display: inline-flex;
+  align-items: flex-start;
+}
+
+.auth-hero .sprout {
+  width: 26px;
+  height: 28px;
+  margin: -1px 0 0 -8px;
+  flex-shrink: 0;
+}
+
+.auth-hero .brand-line {
+  font-size: 0.64rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  padding-left: 0.34em;
+}
+
+.auth-hero .hero-art {
+  position: relative;
+  height: 340px;
+  margin-top: 6px;
+  overflow: hidden;
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent, #000 4%, #000 84%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, transparent, #000 4%, #000 84%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.auth-hero .hero-art img {
+  position: absolute;
+  left: 50%;
+  top: -48px;
+  transform: translateX(-50%);
+  width: 104%;
+  max-width: none;
+  height: auto;
+  pointer-events: none;
+}
+
+.auth-hero--compact {
+  padding-bottom: 22px;
+}
+.auth-hero--compact + .auth-form {
+  margin-top: 0;
+}
+
+.auth-form {
+  position: relative;
+  padding: 0 26px 30px;
+  margin-top: -16px;
+}
+
+.auth-form h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.9rem;
+  text-align: center;
+  margin: 0 0 4px;
+}
+
+.auth-form .auth-sub {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  margin: 0 0 18px;
+  text-wrap: balance;
+}
+
+.auth-form form {
+  margin-bottom: 12px;
+  gap: 13px;
+}
+
+.auth-form .field {
+  gap: 6px;
+}
+
+.auth-form .field .lbl {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.auth-form .pw-row {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.auth-form .pw-row .pw-link {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.auth-form input {
+  width: 100%;
+  background: var(--surface);
+}
+
+.btn-primary {
+  align-self: stretch;
+  width: 100%;
+  text-align: center;
+  background: var(--teal-deep);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 20px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: var(--teal);
+}
+
+/* Dark mode: the light mint --teal-deep would wash out under white text. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .btn-primary {
+    background: var(--teal);
+    color: #16221a;
+  }
+}
+:root[data-theme="dark"] .btn-primary {
+  background: var(--teal);
+  color: #16221a;
+}
+
+.auth-form .or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 14px 0;
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+}
+
+.auth-form .or::before,
+.auth-form .or::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.btn-google {
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 11px 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  cursor: not-allowed;
+}
+
+.btn-google:hover {
+  background: var(--surface-alt);
+}
+
+.btn-google svg {
+  width: 18px;
+  height: 18px;
+}
+
+.auth-form .foot {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 16px 0 0;
+}
+
+.auth-back {
+  display: inline-block;
+  margin: 0 0 14px;
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 460px) {
+  main.auth {
+    padding: 0;
+  }
+  .auth-card {
+    max-width: none;
+    min-height: 100vh;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+}
+
+.tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  margin: 0 0 26px;
+}
+
+.btn-ghost {
+  background: var(--surface-alt);
+  color: var(--ink);
+}
+
+.btn-ghost:hover {
+  background: var(--line);
+}
+
+.lede {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.btn-link {
+  background: none;
+  color: var(--ink-soft);
+  font-weight: 500;
+  padding: 4px;
+}
+
+.btn-link:hover {
+  background: none;
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.dial-progress {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.dial-progress span {
+  width: 20px;
+  height: 3px;
+  border-radius: 999px;
+  background: var(--surface-alt);
+  display: inline-block;
+}
+
+.dial-progress span.done {
+  background: var(--teal);
+}
+
+.step-meta {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+
+[role="alert"] {
+  color: var(--coral);
+  background: var(--coral-tint);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+
+[role="status"] {
+  color: var(--teal-deep);
+  background: var(--teal-tint);
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+}
+
+/* Tag chips (cross-life-area connections, due dates) */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--teal-deep);
+  background: var(--teal-tint);
+  border-radius: 999px;
+  padding: 3px 10px;
+  white-space: nowrap;
+}
+
+.tag::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--teal);
+  display: inline-block;
+}
+
+.tag.honey {
+  color: var(--honey);
+  background: var(--honey-tint);
+}
+.tag.honey::before {
+  background: var(--honey);
+}
+
+.tag.coral {
+  color: var(--coral);
+  background: var(--coral-tint);
+}
+.tag.coral::before {
+  background: var(--coral);
+}
+
+/* Icon chip (life area / brain-dump icons) */
+.icon-chip {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: var(--surface-alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+/* Progress gauge (goals, money) */
+.gauge {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--surface-alt);
+  overflow: hidden;
+}
+
+.gauge > span {
+  display: block;
+  height: 100%;
+  background: var(--teal);
+  border-radius: 999px;
+}
+
+.gauge.honey > span {
+  background: var(--honey);
+}
+
+/* Rows within cards */
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.figure {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/* Life Areas grid */
+.area-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.area-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: var(--shadow);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.area-card:hover {
+  text-decoration: none;
+  border-color: var(--teal);
+}
+
+.area-card-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* Bottom navigation */
+nav[aria-label="Primary"] {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+nav[aria-label="Primary"] ul {
+  flex-direction: row;
+  justify-content: space-around;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 8px 4px;
+}
+
+nav[aria-label="Primary"] li {
+  flex: 1;
+}
+
+nav[aria-label="Primary"] a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 0.68rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  padding: 6px 2px;
+  border-radius: 10px;
+  text-decoration: none;
+}
+
+nav[aria-label="Primary"] a[aria-current="page"] {
+  color: var(--teal-deep);
+  font-weight: 700;
+  background: var(--teal-tint);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+
+/* Adea chat (/adea) */
+.chat-log {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 96px;
+}
+
+.chat-empty {
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.chat-msg {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+.chat-msg.user {
+  align-self: flex-end;
+  background: var(--teal);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-msg.assistant {
+  align-self: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-form {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 72px;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  flex-direction: row;
+  gap: 8px;
+  background: linear-gradient(to top, var(--paper) 70%, transparent);
+}
+
+.chat-form input {
+  flex: 1;
+  background: var(--surface);
+}
+
+.chat-form button {
+  align-self: stretch;
+}
+
+.chat-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

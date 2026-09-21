@@ -1,0 +1,151 @@
+<!--
+  Adea — "Welcome" email  (DRAFT)
+  ---------------------------------------------------------------------------
+  Sent AFTER a user confirms their email. This is NOT a Supabase auth template —
+  Supabase has no "welcome" email — so sending it needs, as a later step:
+    1. A transactional email provider (e.g. Resend / Postmark / SES)
+    2. A verified Adea sending domain
+    3. A trigger on "user confirmed" — a Supabase Auth Hook, a DB trigger +
+       Edge Function, or an app-side check on first authenticated load.
+
+  Until then this file is just the approved design + first-draft copy. The
+  {{ ... }} tokens are placeholders — the real names depend on the provider chosen.
+    {{ AppURL }}     — where "Open Adea" should point (e.g. https://app.adea.com)
+    {{ FirstName }}  — optional; template falls back gracefully if unknown
+
+  Same build rules as confirm-signup.html: table layout, inline styles, web-font
+  requests with Georgia / system-sans fallbacks, dark-mode via @media.
+-->
+<!DOCTYPE html>
+<html lang="en" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="x-apple-disable-message-reformatting" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="supported-color-schemes" content="light dark" />
+  <title>Welcome to Adea</title>
+  <!--[if mso]>
+  <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+    img { -ms-interpolation-mode: bicubic; border: 0; line-height: 100%; outline: none; text-decoration: none; }
+    body { margin: 0; padding: 0; width: 100% !important; height: 100% !important; }
+    a { color: #3a5a40; }
+    .btn-td:hover { background: #2a4230 !important; }
+
+    @media (prefers-color-scheme: dark) {
+      .bg      { background: #0c1215 !important; }
+      .card    { background: #1b252b !important; border-color: #2c383e !important; }
+      .foot    { background: #121a1f !important; }
+      .step    { background: #1b252b !important; border-color: #2c383e !important; }
+      .ink     { color: #edefec !important; }
+      .ink-soft{ color: #b7bfba !important; }
+      .rule    { border-color: #2c383e !important; }
+      .btn-td  { background: #3a5a40 !important; }
+    }
+
+    @media only screen and (max-width: 620px) {
+      .card, .card-pad { width: 100% !important; }
+      .px { padding-left: 24px !important; padding-right: 24px !important; }
+    }
+  </style>
+</head>
+<body class="bg" style="margin:0; padding:0; background:#e9ede9;">
+  <div style="display:none; max-height:0; overflow:hidden; opacity:0;">Your Adea account is ready — here&rsquo;s a calm way to start.</div>
+
+  <table role="presentation" class="bg" width="100%" cellpadding="0" cellspacing="0" style="background:#e9ede9;">
+    <tr>
+      <td align="center" style="padding:40px 16px;">
+
+        <table role="presentation" class="card" width="600" cellpadding="0" cellspacing="0" style="width:600px; max-width:600px; background:#ffffff; border:1px solid #d3dad7; border-radius:14px; overflow:hidden; font-family:'Work Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+
+          <tr><td style="height:3px; line-height:3px; font-size:3px; background:#c68a3d;">&nbsp;</td></tr>
+
+          <tr>
+            <td class="px" style="background:#3a5a40; padding:22px 30px;">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="width:34px; height:34px; background:rgba(255,255,255,0.16); border-radius:10px; text-align:center; vertical-align:middle; font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:18px; color:#ffffff;">A</td>
+                  <td style="padding-left:12px; font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:20px; color:#ffffff;">Adea</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="px card-pad" style="padding:34px 34px 30px;">
+              <h1 class="ink" style="margin:0 0 14px; font-family:'Fraunces',Georgia,'Times New Roman',serif; font-weight:600; font-size:24px; line-height:1.25; color:#16212b;">Welcome to Adea</h1>
+
+              <p class="ink-soft" style="margin:0 0 16px; font-size:15px; line-height:1.65; color:#46545e;">Thank you for trusting Adea with something personal &mdash; the shape of your everyday life. This is the start of a calmer, clearer way to keep it together.</p>
+              <p class="ink-soft" style="margin:0 0 16px; font-size:15px; line-height:1.65; color:#46545e;">Your account is ready. Adea holds the parts of life that usually scatter across ten apps and notebooks &mdash; money, goals, health, family, and the rest &mdash; in one place, with a partner who helps you keep track.</p>
+              <p class="ink-soft" style="margin:0 0 24px; font-size:15px; line-height:1.65; color:#46545e;">A good first step is a <strong style="color:#16212b;">Brain Dump</strong>: write down whatever&rsquo;s on your mind, and Adea sorts it into the right areas for you.</p>
+
+              <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 26px;">
+                <tr>
+                  <td class="btn-td" align="center" bgcolor="#3a5a40" style="border-radius:999px; background:#3a5a40;">
+                    <!--[if mso]>
+                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="{{ AppURL }}" style="height:46px;v-text-anchor:middle;width:180px;" arcsize="50%" strokecolor="#3a5a40" fillcolor="#3a5a40">
+                      <w:anchorlock/>
+                      <center style="color:#ffffff;font-family:sans-serif;font-size:15px;font-weight:bold;">Open Adea</center>
+                    </v:roundrect>
+                    <![endif]-->
+                    <!--[if !mso]><!-- -->
+                    <a href="{{ AppURL }}" style="display:inline-block; padding:13px 30px; font-family:'Work Sans',Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; color:#ffffff; text-decoration:none; border-radius:999px;">Open Adea</a>
+                    <!--<![endif]-->
+                  </td>
+                </tr>
+              </table>
+
+              <!-- what's inside -->
+              <table role="presentation" class="step" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #d3dad7; border-radius:12px; overflow:hidden;">
+                <tr>
+                  <td class="rule" style="padding:14px 18px; border-bottom:1px solid #d3dad7;">
+                    <p class="ink" style="margin:0 0 3px; font-size:14px; font-weight:600; color:#16212b;">Brain Dump</p>
+                    <p class="ink-soft" style="margin:0; font-size:13px; line-height:1.55; color:#46545e;">Empty your head into one box. Adea files each thing where it belongs.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule" style="padding:14px 18px; border-bottom:1px solid #d3dad7;">
+                    <p class="ink" style="margin:0 0 3px; font-size:14px; font-weight:600; color:#16212b;">Life Areas</p>
+                    <p class="ink-soft" style="margin:0; font-size:13px; line-height:1.55; color:#46545e;">Every part of life as its own simple space &mdash; open the ones that matter to you.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="rule" style="padding:14px 18px; border-bottom:1px solid #d3dad7;">
+                    <p class="ink" style="margin:0 0 3px; font-size:14px; font-weight:600; color:#16212b;">Money</p>
+                    <p class="ink-soft" style="margin:0; font-size:13px; line-height:1.55; color:#46545e;">Income, bills, spending and goals in one connected view, not five apps.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="padding:14px 18px;">
+                    <p class="ink" style="margin:0 0 3px; font-size:14px; font-weight:600; color:#16212b;">Talk to Adea</p>
+                    <p class="ink-soft" style="margin:0; font-size:13px; line-height:1.55; color:#46545e;">Ask a question, think out loud, or get a nudge. Short, calm, no lectures.</p>
+                  </td>
+                </tr>
+              </table>
+
+              <p class="ink-soft" style="margin:22px 0 0; font-size:13px; line-height:1.6; color:#6b7770;">Questions? Visit our <a href="{{ ContactURL }}" style="color:#3a5a40;">contact page</a> or email <a href="mailto:hello@adea.app" style="color:#3a5a40;">hello@adea.app</a>.</p>
+            </td>
+          </tr>
+
+          <tr><td class="rule" style="border-top:1px solid #d3dad7; font-size:0; line-height:0;">&nbsp;</td></tr>
+
+          <tr>
+            <td class="px foot" style="padding:20px 34px 24px; background:#e9ede9;">
+              <p style="margin:0 0 4px; font-family:'Fraunces',Georgia,serif; font-style:italic; font-size:13px; color:#46545e;">Transform life&rsquo;s chaos into clarity.</p>
+              <p class="ink-soft" style="margin:0; font-size:12px; line-height:1.5; color:#6b7770;">Adea &mdash; your AI partner in life.</p>
+              <!-- TODO: once a sending domain + ESP are set up, add a one-click unsubscribe / email-preferences link here to stay CAN-SPAM / CASL compliant. -->
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

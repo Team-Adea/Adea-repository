@@ -1,4 +1,31 @@
+# dependencies
 node_modules/
+
+# builds
 .next/
+dist/
+build/
+out/
+
+# expo / react native
+.expo/
+*.orig.*
+web-build/
+apps/mobile/ios/
+apps/mobile/android/
+
+# test output
+coverage/
+playwright-report/
+test-results/
+
+# env
+.env
 .env.local
 .env*.local
+
+# misc
+.DS_Store
+*.pem
+*.tsbuildinfo
+**/next-env.d.ts

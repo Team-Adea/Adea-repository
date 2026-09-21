@@ -1,0 +1,30 @@
+{
+  "expo": {
+    "name": "Adea",
+    "slug": "adea",
+    "scheme": "adea",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.teamadea.adea"
+    },
+    "android": {
+      "package": "com.teamadea.adea",
+      "edgeToEdgeEnabled": true
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static"
+    },
+    "plugins": ["expo-router", "expo-secure-store"],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "supabaseUrl": "https://xqmfpuqwbwewgkjukhxf.supabase.co"
+    }
+  }
+}
